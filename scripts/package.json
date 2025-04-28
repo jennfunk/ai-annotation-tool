@@ -1,0 +1,13 @@
+{
+  "name": "openai-thread-exporter",
+  "version": "1.0.0",
+  "description": "Export OpenAI threads for the LLM Grader",
+  "main": "export-threads.js",
+  "scripts": {
+    "export": "node export-threads.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "openai": "^4.96.0"
+  }
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LocalStorage Test</title>
+</head>
+<body>
+  <h1>LocalStorage Test</h1>
+  <button onclick="saveTest()">Save Test Data</button>
+  <button onclick="loadTest()">Load Test Data</button>
+  <button onclick="clearTest()">Clear Test Data</button>
+  <div id="result" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;"></div>
+
+  <script>
+    function saveTest() {
+      try {
+        localStorage.setItem('test_data', JSON.stringify({
+          timestamp: new Date().toISOString(),
+          testValue: 'This is a test'
+        }));
+        document.getElementById('result').innerHTML = 'Test data saved successfully!';
+      } catch (error) {
+        document.getElementById('result').innerHTML = 'Error saving: ' + error.message;
+      }
+    }
+
+    function loadTest() {
+      try {
+        const data = localStorage.getItem('test_data');
+        if (data) {
+          const parsedData = JSON.parse(data);
+          document.getElementById('result').innerHTML = 
+            'Data found!<br>Timestamp: ' + parsedData.timestamp + 
+            '<br>Value: ' + parsedData.testValue;
+        } else {
+          document.getElementById('result').innerHTML = 'No test data found in localStorage';
+        }
+      } catch (error) {
+        document.getElementById('result').innerHTML = 'Error loading: ' + error.message;
+      }
+    }
+
+    function clearTest() {
+      try {
+        localStorage.removeItem('test_data');
+        document.getElementById('result').innerHTML = 'Test data cleared!';
+      } catch (error) {
+        document.getElementById('result').innerHTML = 'Error clearing: ' + error.message;
+      }
+    }
+
+    // Check current storage
+    window.onload = function() {
+      const storageInfo = document.createElement('div');
+      storageInfo.style.marginTop = '20px';
+      
+      // Check if localStorage is available
+      if (typeof localStorage === 'undefined') {
+        storageInfo.innerHTML = '<strong style="color: red;">localStorage is not available in this browser!</strong>';
+      } else {
+        // List all items in localStorage
+        let totalItems = 0;
+        let itemList = '<strong>Current localStorage items:</strong><ul>';
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          totalItems++;
+          let value = localStorage.getItem(key);
+          if (value.length > 100) {
+            value = value.substring(0, 100) + '... (truncated)';
+          }
+          itemList += `<li>${key}: ${value}</li>`;
+        }
+        itemList += '</ul>';
+        
+        if (totalItems === 0) {
+          storageInfo.innerHTML = '<strong>localStorage is empty</strong>';
+        } else {
+          storageInfo.innerHTML = `<strong>${totalItems} items in localStorage:</strong><br>` + itemList;
+        }
+      }
+      
+      document.body.appendChild(storageInfo);
+    };
+  </script>
+</body>
+</html> 
