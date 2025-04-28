@@ -1,1 +1,1 @@
-{"version": 2,"buildCommand": "npm install --legacy-peer-deps && npm run build","outputDirectory": "dist","routes": [{ "handle": "filesystem" },{ "src": "/(.*)", "dest": "/index.html" }]}
+{"version":2,"buildCommand":"npm install --legacy-peer-deps && NODE_ENV=production npx webpack --mode production","outputDirectory":"dist","routes":[{"handle":"filesystem"},{"src":"/(.*)","dest":"/index.html"}]}
